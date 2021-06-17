@@ -13,11 +13,11 @@ export class ReviewService {
 
   async findByHotelAndCreatedDate(
     hotelId: number,
-    fromDate: Date,
-    toDate: Date,
+    fromDate?: Date,
+    toDate?: Date,
   ): Promise<any> {
-    const diffInDays = moment(toDate).diff(moment(fromDate), 'days');
-
+    const diffInDays =
+      !fromDate || !toDate ? 90 : moment(toDate).diff(moment(fromDate), 'days');
     const dateGroup =
       diffInDays < 30 ? 'daily' : diffInDays < 90 ? 'weekly' : 'monthly';
 
@@ -134,7 +134,9 @@ export class ReviewService {
   }
 
   async getMonthlyData(hotelId, fromDate, toDate) {
-    const monthList = this.getMonths(fromDate, toDate);
+    const startDate = fromDate ? fromDate : moment().subtract(2, 'years');
+    const endDate = toDate ? toDate : moment();
+    const monthList = this.getMonths(startDate, endDate);
     const result = [];
     for (const month of monthList) {
       const queryResult = await getRepository(Review)
