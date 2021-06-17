@@ -3,6 +3,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="Screenshot.png" alt="Screenshot" /></a>
 </div>
 ## Install PostgreSQL and create `hotel` database
+
 ## Running the backend service
 
 ```bash
